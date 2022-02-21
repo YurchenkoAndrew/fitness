@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Contracts\Auth\IAuthUser;
 use App\Contracts\Auth\INewPassword;
 use App\Contracts\Auth\IPasswordResetLink;
+use App\Repositories\DAO\TestRepository;
+use App\Repositories\Interfaces\ITestRepository;
 use App\Services\Auth\AuthUserService;
 use App\Services\Auth\NewPasswordService;
 use App\Services\Auth\PasswordResetLinkService;
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->instance(IAuthUser::class, new AuthUserService());
         $this->app->instance(IPasswordResetLink::class, new PasswordResetLinkService());
         $this->app->instance(INewPassword::class, new NewPasswordService());
+        $this->app->instance(ITestRepository::class, new TestRepository());
     }
 
     /**
