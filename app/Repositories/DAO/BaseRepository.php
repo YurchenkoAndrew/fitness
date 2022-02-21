@@ -74,10 +74,7 @@ abstract class BaseRepository implements IBaseRepository
      */
     public function show(int $id): ?Model
     {
-        $result = $this->model->query();
-
-        return $result->find($id);
-
+        return $this->model->query()->find($id);
     }
 
     /**
@@ -87,6 +84,7 @@ abstract class BaseRepository implements IBaseRepository
     public function create(mixed $data): JsonResponse
     {
         $this->model->query()->create($data);
+
         // TODO: Make a translation and add a response.
         return response()->json();
     }
