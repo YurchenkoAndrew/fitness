@@ -5,6 +5,7 @@ namespace App\DAO\Repositories\Auth;
 use App\DAO\Interfaces\Auth\IAuthRepository;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthRepository implements IAuthRepository
 {
 
-    public function register(mixed $user): JsonResponse
+    public function register(FormRequest $user): JsonResponse
     {
+        $user = $user->validated();
         $user = User::query()->create([
             'name' => $user['name'],
             'email' => $user['email'],

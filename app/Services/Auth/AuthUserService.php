@@ -4,7 +4,7 @@ namespace App\Services\Auth;
 
 use App\Contracts\Auth\IAuthUser;
 use App\DAO\Interfaces\Auth\IAuthRepository;
-use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +28,10 @@ class AuthUserService implements IAuthUser
     }
 
     /**
-     * @param User $user
+     * @param FormRequest $user
      * @return JsonResponse
      */
-    public function register(mixed $user): JsonResponse
+    public function register(FormRequest $user): JsonResponse
     {
         return $this->authRepository->register($user);
     }

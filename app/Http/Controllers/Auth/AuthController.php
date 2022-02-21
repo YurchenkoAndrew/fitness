@@ -20,7 +20,7 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $registerRequest): JsonResponse
     {
-        return $this->authUserService->register($registerRequest->validated());
+        return $this->authUserService->register($registerRequest);
     }
 
     public function verify(int $id, Request $request): JsonResponse

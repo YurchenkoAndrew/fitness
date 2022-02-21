@@ -19,7 +19,8 @@ class NewPasswordController extends Controller
 
     public function create(NewPasswordCreateRequest $request): JsonResponse
     {
-        return $this->newPasswordService->create($request);
+        $validated = $request->validated();
+        return $this->newPasswordService->create($validated['token']);
     }
 
     public function store(NewPasswordStoreRequest $request): JsonResponse
