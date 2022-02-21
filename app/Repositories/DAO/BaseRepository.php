@@ -86,6 +86,8 @@ abstract class BaseRepository implements IBaseRepository
      */
     public function create(mixed $data): JsonResponse
     {
+        $this->model->query()->create($data);
+        // TODO: Make a translation and add a response.
         return response()->json();
     }
 
@@ -98,6 +100,7 @@ abstract class BaseRepository implements IBaseRepository
     {
         $this->model->query()->find($id)->update($data);
 
+        // TODO: Make a translation and add a response.
         return response()->json();
     }
 
@@ -109,6 +112,7 @@ abstract class BaseRepository implements IBaseRepository
     {
         $this->model->query()->find($id)->delete();
 
+        // TODO: Make a translation and add a response.
         return response()->json();
 
     }
