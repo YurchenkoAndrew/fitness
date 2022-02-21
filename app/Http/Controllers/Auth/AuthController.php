@@ -30,6 +30,7 @@ class AuthController extends Controller
 
     public function resend(ResendEmailVerifyRequest $emailVerifyRequest): JsonResponse
     {
-        return $this->authUserService->resendEmailVerify($emailVerifyRequest->validated());
+        $validated = $emailVerifyRequest->validated();
+        return $this->authUserService->resendEmailVerify($validated['email']);
     }
 }
