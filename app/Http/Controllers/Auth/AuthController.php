@@ -18,9 +18,9 @@ class AuthController extends Controller
         $this->authUserService = $authUserService;
     }
 
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $registerRequest): JsonResponse
     {
-        return $this->authUserService->register($request);
+        return $this->authUserService->register($registerRequest->validated());
     }
 
     public function verify(int $id, Request $request): JsonResponse
@@ -30,6 +30,6 @@ class AuthController extends Controller
 
     public function resend(ResendEmailVerifyRequest $emailVerifyRequest): JsonResponse
     {
-        return $this->authUserService->resendEmailVerify($emailVerifyRequest);
+        return $this->authUserService->resendEmailVerify($emailVerifyRequest->validated());
     }
 }

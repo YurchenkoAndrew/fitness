@@ -3,9 +3,6 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Auth\IAuthUser;
-use App\Http\Requests\Auth\AuthRequest;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\ResendEmailVerifyRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
@@ -17,25 +14,25 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthUserService implements IAuthUser
 {
 
-    public function register(RegisterRequest $registerRequest): JsonResponse
+    public function register(Request $request): JsonResponse
     {
         $user = User::query()->create([
-            'name' => $registerRequest['name'],
-            'email' => $registerRequest['email'],
-            'password' => Hash::make($registerRequest['password'])
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password'])
         ]);
         event(new Registered($user));
         return response()->json(['message' => __('register.registered')], Response::HTTP_CREATED);
     }
 
-    public function login(AuthRequest $authRequest): JsonResponse
+    public function login(Request $request): JsonResponse
     {
         $response = Http::asForm()->post(env('APP_URL') . '/oauth/token', [
             'grant_type' => 'password',
             'client_id' => env('CLIENT_ID'),
             'client_secret' => env('CLIENT_SECRET'),
-            'username' => $authRequest->input('username'),
-            'password' => $authRequest->input('password'),
+            'username' => $request->input('username'),
+            'password' => $request->input('password'),
             'scope' => '',
         ]);
         return response()->json(['tokenResponse' => $response->json()], Response::HTTP_OK);
@@ -63,9 +60,9 @@ class AuthUserService implements IAuthUser
         return response()->json(['message' => __('register.email_verified')], Response::HTTP_OK);
     }
 
-    public function resendEmailVerify(ResendEmailVerifyRequest $emailVerifyRequest): JsonResponse
+    public function resendEmailVerify(Request $request): JsonResponse
     {
-        $user = User::query()->where('email', $emailVerifyRequest->input('email'))->firstOr(function () {
+        $user = User::query()->where('email', $request->input('email'))->firstOr(function () {
             return null;
         });
         if ($user == null) {
