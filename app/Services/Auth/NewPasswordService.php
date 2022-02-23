@@ -4,8 +4,8 @@ namespace App\Services\Auth;
 
 use App\Contracts\Auth\INewPassword;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 class NewPasswordService implements INewPassword
 {
 
-    public function create(string $token): JsonResponse
+    public function create(Request $request): JsonResponse
     {
-        return response()->json(['token' => $token], Response::HTTP_OK);
+        return response()->json(['token' => $request['token']], Response::HTTP_OK);
     }
 
-    public function store(FormRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),

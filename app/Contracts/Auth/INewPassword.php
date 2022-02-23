@@ -2,12 +2,12 @@
 
 namespace App\Contracts\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 interface INewPassword
 {
-    public function create(string $token): JsonResponse;
+    public function create(Request $request): JsonResponse;
 
-    public function store(FormRequest $request): JsonResponse;
+    public function store(Request $request): JsonResponse;
 }

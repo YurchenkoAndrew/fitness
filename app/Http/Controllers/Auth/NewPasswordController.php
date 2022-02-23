@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Contracts\Auth\INewPassword;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\NewPasswordCreateRequest;
-use App\Http\Requests\Auth\NewPasswordStoreRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class NewPasswordController extends Controller
 {
@@ -17,14 +16,18 @@ class NewPasswordController extends Controller
         $this->newPasswordService = $newPasswordService;
     }
 
-    public function create(NewPasswordCreateRequest $request): JsonResponse
+    public function create(Request $request): JsonResponse
     {
-        $validated = $request->validated();
-        return $this->newPasswordService->create($validated['token']);
+        return $this->newPasswordService->create($request);
     }
 
-    public function store(NewPasswordStoreRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|string|confirmed|min:8',
+        ]);
         return $this->newPasswordService->store($request);
     }
 }
