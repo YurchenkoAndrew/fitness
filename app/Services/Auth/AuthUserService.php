@@ -3,7 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Auth\IAuthUser;
-use App\DAO\Interfaces\Auth\IAuthRepository;
+use App\Repositories\Interfaces\Auth\IAuthRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthUserService implements IAuthUser
 {
     /**
-     * @var IAuthRepository
+     * @var \App\Repositories\Interfaces\Auth\IAuthRepository
      */
     protected IAuthRepository $authRepository;
 

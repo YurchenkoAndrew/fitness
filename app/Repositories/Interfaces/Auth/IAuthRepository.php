@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DAO\Interfaces\Auth;
+namespace App\Repositories\Interfaces\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;

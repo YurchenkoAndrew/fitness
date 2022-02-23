@@ -1,9 +1,9 @@
 <?php
 
-namespace App\DAO\Repositories\Auth;
+namespace App\Repositories\DAO\Auth;
 
-use App\DAO\Interfaces\Auth\IAuthRepository;
 use App\Models\User;
+use App\Repositories\Interfaces\Auth\IAuthRepository;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
+use function __;
+use function env;
+use function event;
+use function response;
 
 class AuthRepository implements IAuthRepository
 {
