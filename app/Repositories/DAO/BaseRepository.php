@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Pipeline\Pipeline;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
@@ -85,8 +86,7 @@ abstract class BaseRepository implements IBaseRepository
     {
         $this->model->query()->create($data);
 
-        // TODO: Make a translation and add a response.
-        return response()->json();
+        return response()->json(['message' => __('base-crud.create')], Response::HTTP_CREATED);
     }
 
     /**
@@ -98,8 +98,7 @@ abstract class BaseRepository implements IBaseRepository
     {
         $this->model->query()->find($id)->update($data);
 
-        // TODO: Make a translation and add a response.
-        return response()->json();
+        return response()->json(['message' => __('base-crud.update')], Response::HTTP_CREATED);
     }
 
     /**
@@ -110,8 +109,7 @@ abstract class BaseRepository implements IBaseRepository
     {
         $this->model->query()->find($id)->delete();
 
-        // TODO: Make a translation and add a response.
-        return response()->json();
+        return response()->json(['message' => __('base-crud.delete')], Response::HTTP_OK);
 
     }
 }
