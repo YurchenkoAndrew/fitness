@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthUserService implements IAuthUser
 {
     /**
-     * @var \App\Repositories\Interfaces\Auth\IAuthRepository
+     * @var IAuthRepository
      */
     protected IAuthRepository $authRepository;
 

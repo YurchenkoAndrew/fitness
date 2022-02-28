@@ -6,6 +6,7 @@ use App\Repositories\Interfaces\IBaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pipeline\Pipeline;
 use Psr\Container\ContainerExceptionInterface;
@@ -25,7 +26,7 @@ abstract class BaseRepository implements IBaseRepository
     /**
      * @return mixed
      */
-    abstract public function model(): mixed;
+    abstract public function model(): string;
 
     /**
      *
@@ -36,16 +37,16 @@ abstract class BaseRepository implements IBaseRepository
     }
 
     /**
-     * @param mixed $filters
+     * @param mixed $pipes
      * @return Collection
      */
-    public function all(mixed $filters): Collection
+    public function all(mixed $pipes): Collection
     {
         $result = $this->model->query();
 
         $result = app(Pipeline::class)
             ->send($result)
-            ->through($filters)
+            ->through($pipes)
             ->thenReturn();
 
         return $result->get();
@@ -56,13 +57,13 @@ abstract class BaseRepository implements IBaseRepository
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function paginate(mixed $filters, int $perPage): LengthAwarePaginator
+    public function paginate(mixed $pipes, int $perPage): LengthAwarePaginator
     {
         $result = $this->model->query();
 
         $result = app(Pipeline::class)
             ->send($result)
-            ->through($filters)
+            ->through($pipes)
             ->thenReturn();
 
         return $result->paginate(request()->get($perPage));
@@ -79,24 +80,24 @@ abstract class BaseRepository implements IBaseRepository
     }
 
     /**
-     * @param mixed $data
+     * @param FormRequest $request
      * @return JsonResponse
      */
-    public function create(mixed $data): JsonResponse
+    public function create(FormRequest $request): JsonResponse
     {
-        $this->model->query()->create($data);
+        $this->model->query()->create($request->validated());
 
         return response()->json(['message' => __('base-crud.create')], Response::HTTP_CREATED);
     }
 
     /**
-     * @param mixed $data
+     * @param FormRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function update(mixed $data, int $id): JsonResponse
+    public function update(FormRequest $request, int $id): JsonResponse
     {
-        $this->model->query()->find($id)->update($data);
+        $this->model->query()->find($id)->update($request->validated());
 
         return response()->json(['message' => __('base-crud.update')], Response::HTTP_CREATED);
     }
