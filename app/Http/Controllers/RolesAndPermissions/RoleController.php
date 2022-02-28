@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 use App\Services\RolesAndPermissions\RolesService;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 
 class RoleController extends Controller
@@ -19,9 +17,9 @@ class RoleController extends Controller
     }
 
     /**
-     * @return Collection
+     * @return JsonResponse
      */
-    public function index(): Collection
+    public function index(): JsonResponse
     {
         return $this->service->listRoles();
     }
@@ -41,9 +39,9 @@ class RoleController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Model|null
+     * @return JsonResponse
      */
-    public function show(int $id): ?Model
+    public function show(int $id): JsonResponse
     {
         return $this->service->shouRole($id);
     }

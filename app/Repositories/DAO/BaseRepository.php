@@ -3,8 +3,6 @@
 namespace App\Repositories\DAO;
 
 use App\Repositories\Interfaces\IBaseRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
@@ -38,9 +36,9 @@ abstract class BaseRepository implements IBaseRepository
 
     /**
      * @param mixed $pipes
-     * @return Collection
+     * @return JsonResponse
      */
-    public function all(mixed $pipes): Collection
+    public function all(mixed $pipes): JsonResponse
     {
         $result = $this->model->query();
 
@@ -57,7 +55,7 @@ abstract class BaseRepository implements IBaseRepository
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function paginate(mixed $pipes, int $perPage): LengthAwarePaginator
+    public function paginate(mixed $pipes, int $perPage): JsonResponse
     {
         $result = $this->model->query();
 
@@ -66,17 +64,17 @@ abstract class BaseRepository implements IBaseRepository
             ->through($pipes)
             ->thenReturn();
 
-        return $result->paginate(request()->get($perPage));
+        return response()->json($result->paginate(request()->get($perPage)), Response::HTTP_OK);
 
     }
 
     /**
      * @param int $id
-     * @return Model|null
+     * @return JsonResponse
      */
-    public function show(int $id): ?Model
+    public function show(int $id): JsonResponse
     {
-        return $this->model->query()->find($id);
+        return response()->json($this->model->query()->find($id), Response::HTTP_OK);
     }
 
     /**

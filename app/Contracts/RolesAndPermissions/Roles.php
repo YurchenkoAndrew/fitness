@@ -2,16 +2,14 @@
 
 namespace App\Contracts\RolesAndPermissions;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 
 interface Roles
 {
-    public function listRoles(): Collection;
+    public function listRoles(): JsonResponse;
 
-    public function shouRole(int $id): ?Model;
+    public function shouRole(int $id): JsonResponse;
 
     public function storeRole(FormRequest $request): JsonResponse;
 

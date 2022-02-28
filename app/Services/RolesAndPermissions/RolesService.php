@@ -5,8 +5,6 @@ namespace App\Services\RolesAndPermissions;
 use App\Contracts\RolesAndPermissions\Roles;
 use App\Pipes\QueryFilters\OrderBy;
 use App\Repositories\Interfaces\RolesAndPermissions\IRolesRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -22,12 +20,12 @@ class RolesService implements Roles
         $this->repository = $repository;
     }
 
-    public function listRoles(): Collection
+    public function listRoles(): JsonResponse
     {
         return $this->repository->all([OrderBy::class]);
     }
 
-    public function shouRole(int $id): ?Model
+    public function shouRole(int $id): JsonResponse
     {
         return $this->repository->show($id);
     }
