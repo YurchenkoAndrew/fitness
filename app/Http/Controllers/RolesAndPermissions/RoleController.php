@@ -8,12 +8,22 @@ use App\Http\Requests\Role\UpdateRoleRequest;
 use App\Services\RolesAndPermissions\RolesService;
 use Illuminate\Http\JsonResponse;
 
+/**
+ *
+ */
 class RoleController extends Controller
 {
+    /**
+     * @var RolesService
+     */
     protected RolesService $service;
 
+    /**
+     * @param RolesService $service
+     */
     public function __construct(RolesService $service)
     {
+        $this->service = $service;
     }
 
     /**

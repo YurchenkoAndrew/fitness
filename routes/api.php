@@ -16,4 +16,5 @@
 
 include('auth/auth-api-routes.php');
 include('auth/reset-password-api-routes.php');
+include('roles-and-permissions/roles.php');
 

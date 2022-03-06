@@ -24,7 +24,7 @@ abstract class BaseRepository implements IBaseRepository
     /**
      * @return mixed
      */
-    abstract public function model(): string;
+    abstract public function model(): Model;
 
     /**
      *
@@ -47,7 +47,7 @@ abstract class BaseRepository implements IBaseRepository
             ->through($pipes)
             ->thenReturn();
 
-        return $result->get();
+        return response()->json(['data' => $result->get()], Response::HTTP_OK);
 
     }
 
