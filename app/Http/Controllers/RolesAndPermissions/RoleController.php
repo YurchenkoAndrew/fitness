@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\RolesAndPermissions;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Role\RoleSetPermissionRequest;
 use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
-use App\Services\RolesAndPermissions\RolesService;
+use App\Services\Contracts\RolesAndPermissions\IRoles;
+use App\Services\Implementation\RolesAndPermissions\RolesService;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -16,7 +18,7 @@ class RoleController extends Controller
     /**
      * @var RolesService
      */
-    protected RolesService $service;
+    protected IRoles $service;
 
     /**
      * @param RolesService $service
@@ -77,5 +79,23 @@ class RoleController extends Controller
     public function destroy(int $id): JsonResponse
     {
         return $this->service->deleteRole($id);
+    }
+
+    /**
+     * @param RoleSetPermissionRequest $request
+     * @return JsonResponse
+     */
+    public function setPermission(RoleSetPermissionRequest $request): JsonResponse
+    {
+        return $this->service->setPermission($request);
+    }
+
+    /**
+     * @param RoleSetPermissionRequest $request
+     * @return JsonResponse
+     */
+    public function deletePermission(RoleSetPermissionRequest $request): JsonResponse
+    {
+        return $this->service->deletePermission($request);
     }
 }

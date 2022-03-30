@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Auth;
+namespace App\Services\Implementation\Auth;
 
-use App\Contracts\Auth\INewPassword;
+use App\Services\Contracts\Auth\INewPassword;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use function __;
+use function event;
+use function response;
 
 class NewPasswordService implements INewPassword
 {

@@ -3,13 +3,18 @@
 namespace App\Repositories\DAO;
 
 use App\Repositories\Interfaces\IBaseRepository;
+use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\DB;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  *
@@ -35,57 +40,75 @@ abstract class BaseRepository implements IBaseRepository
     }
 
     /**
-     * @param mixed $pipes
-     * @return JsonResponse
+     * @param array $pipes
+     * @return Collection
      */
-    public function all(mixed $pipes): JsonResponse
+    public function all(array $pipes): Collection
     {
-        $result = $this->model->query();
-
-        $result = app(Pipeline::class)
-            ->send($result)
-            ->through($pipes)
-            ->thenReturn();
-
-        return response()->json(['data' => $result->get()], Response::HTTP_OK);
-
+        try {
+            $result = $this->model->query();
+            $result = app(Pipeline::class)
+                ->send($result)
+                ->through($pipes)
+                ->thenReturn();
+            return $result->get();
+        } catch (Exception $exception) {
+            throw new HttpException($exception->getCode(), $exception->getMessage());
+        }
     }
 
     /**
+     * @param array $pipes
+     * @param FormRequest $request
+     * @return LengthAwarePaginator
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function paginate(mixed $pipes, int $perPage): JsonResponse
+    public function paginate(array $pipes, FormRequest $request): LengthAwarePaginator
     {
-        $result = $this->model->query();
-
-        $result = app(Pipeline::class)
-            ->send($result)
-            ->through($pipes)
-            ->thenReturn();
-
-        return response()->json($result->paginate(request()->get($perPage)), Response::HTTP_OK);
+        try {
+            $query = $this->model::query();
+            $result = app(Pipeline::class)
+                ->send($query)
+                ->through($pipes)
+                ->thenReturn();
+            return $result->paginate($request->input(key: 'per_page'));
+        } catch (Exception $exception) {
+            throw new HttpException($exception->getCode(), $exception->getMessage());
+        }
 
     }
 
     /**
      * @param int $id
-     * @return JsonResponse
+     * @return Model
      */
-    public function show(int $id): JsonResponse
+    public function show(int $id): Model
     {
-        return response()->json($this->model->query()->find($id), Response::HTTP_OK);
+        try {
+            $data = $this->model->query()->findOrFail($id);
+        } catch (Exception $exception) {
+            throw new HttpException($exception->getCode(), $exception->getMessage());
+        }
+        return $data;
     }
 
     /**
      * @param FormRequest $request
-     * @return JsonResponse
+     * @return Model
      */
-    public function create(FormRequest $request): JsonResponse
+    public function store(FormRequest $request): Model
     {
-        $this->model->query()->create($request->validated());
+        DB::beginTransaction();
+        try {
+            $data = $this->model->query()->create($request->validated());
+            DB::commit();
 
-        return response()->json(['message' => __('base-crud.create')], Response::HTTP_CREATED);
+            return $data;
+        } catch (Exception $exception) {
+            DB::rollBack();
+            throw new HttpException($exception->getCode(), $exception->getMessage());
+        }
     }
 
     /**
@@ -95,9 +118,15 @@ abstract class BaseRepository implements IBaseRepository
      */
     public function update(FormRequest $request, int $id): JsonResponse
     {
-        $this->model->query()->find($id)->update($request->validated());
-
-        return response()->json(['message' => __('base-crud.update')], Response::HTTP_CREATED);
+        DB::beginTransaction();
+        try {
+            $this->model->query()->find($id)->update($request->validated());
+            DB::commit();
+            return response()->json(['message' => __('base-crud.update')], Response::HTTP_OK);
+        } catch (Exception $exception) {
+            DB::rollBack();
+            throw new HttpException($exception->getCode(), $exception->getMessage());
+        }
     }
 
     /**
@@ -106,9 +135,15 @@ abstract class BaseRepository implements IBaseRepository
      */
     public function delete(int $id): JsonResponse
     {
-        $this->model->query()->find($id)->delete();
-
-        return response()->json(['message' => __('base-crud.delete')], Response::HTTP_OK);
-
+        DB::beginTransaction();
+        try {
+            $this->model->query()->findOrFail($id)->delete();
+            DB::commit();
+            return response()->json(['message' => __('base-crud.delete')], Response::HTTP_OK);
+        } catch (Exception $exception) {
+            DB::rollBack();
+            throw new HttpException($exception->getCode(), $exception->getMessage());
+        }
     }
+
 }

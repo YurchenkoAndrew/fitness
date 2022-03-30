@@ -2,6 +2,9 @@
 
 namespace App\Repositories\Interfaces;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -11,29 +14,29 @@ use Illuminate\Http\JsonResponse;
 interface IBaseRepository
 {
     /**
-     * @param mixed $pipes
-     * @return JsonResponse
+     * @param array $pipes
+     * @return Collection
      */
-    public function all(mixed $pipes): JsonResponse;
+    public function all(array $pipes): Collection;
 
     /**
-     * @param mixed $pipes
-     * @param int $perPage
-     * @return JsonResponse
+     * @param array $pipes
+     * @param FormRequest $request
+     * @return LengthAwarePaginator
      */
-    public function paginate(mixed $pipes, int $perPage): JsonResponse;
+    public function paginate(array $pipes, FormRequest $request): LengthAwarePaginator;
 
     /**
      * @param int $id
-     * @return JsonResponse
+     * @return Model
      */
-    public function show(int $id): JsonResponse;
+    public function show(int $id): Model;
 
     /**
      * @param FormRequest $request
-     * @return JsonResponse
+     * @return Model
      */
-    public function create(FormRequest $request): JsonResponse;
+    public function store(FormRequest $request): Model;
 
     /**
      * @param FormRequest $request

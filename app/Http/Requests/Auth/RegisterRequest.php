@@ -5,6 +5,9 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use JetBrains\PhpStorm\ArrayShape;
 
+/**
+ *
+ */
 class RegisterRequest extends FormRequest
 {
     /**
@@ -32,6 +35,9 @@ class RegisterRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array
+     */
     public function messages(): array
     {
         return [

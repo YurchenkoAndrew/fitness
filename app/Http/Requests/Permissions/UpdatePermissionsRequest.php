@@ -14,7 +14,7 @@ class UpdatePermissionsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,29 +22,34 @@ class UpdatePermissionsRequest extends FormRequest
      *
      * @return array
      */
-    #[ArrayShape(['title_ru' => "string", 'title_en' => "string", 'user_id' => "string"])]
+    #[ArrayShape(['title_ru' => "string", 'title_en' => "string", 'slug' => "string"])]
     public function rules(): array
     {
         return [
-            'title_ru' => 'required|string|min:2|max:100',
-            'title_en' => 'required|string|min:2|max:100',
-            'user_id' => 'required|integer',
+            'title_ru' => 'required|string|min:2|max:255',
+            'title_en' => 'required|string|min:2|max:255',
+            'slug' => 'required|string|min:2|max:255',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'title_ru.required' => __('permissions.title_ru_required'),
-            'title_en.required' => __('permissions.title_en_required'),
-            'title_ru.string' => __('permissions.title_ru_string'),
-            'title_en.string' => __('permissions.title_en_string'),
-            'title_ru.min' => __('permissions.title_ru_min'),
-            'title_en.min' => __('permissions.title_en_min'),
-            'title_ru.max' => __('permissions.title_ru_max'),
-            'title_en.max' => __('permissions.title_en_max'),
-            'user_id.required' => __('permissions.user_id_required'),
-            'user_id.integer' => __('permissions.user_id_integer'),
+            'title_ru.required' => __('validation.required', ['attribute' => "Permission name in Russian", 'attribute_ru' => "Название разрешения на Русском"]),
+            'title_en.required' => __('validation.required', ['attribute' => "Permission name in English", 'attribute_ru' => "Название разрешения на Английском"]),
+            'slug.required' => __('validation.required', ['attribute' => "Permission alias", 'attribute_ru' => "Алиас разрешения"]),
+
+            'title_ru.string' => __('validation.string', ['attribute' => "Permission name in Russian", 'attribute_ru' => "Название разрешения на Русском"]),
+            'title_en.string' => __('validation.string', ['attribute' => "Permission name in English", 'attribute_ru' => "Название разрешения на Английском"]),
+            'slug.string' => __('validation.string', ['attribute' => "Permission alias", 'attribute_ru' => "Алиас разрешения"]),
+
+            'title_ru.min' => __('validation.min.string', ['attribute' => "Permission name in Russian", 'attribute_ru' => "Название разрешения на Русском", 'min' => '2']),
+            'title_en.min' => __('validation.min.string', ['attribute' => "Permission name in English", 'attribute_ru' => "Название разрешения на Английском", 'min' => '2']),
+            'slug.min' => __('validation.min.string', ['attribute' => "Permission alias", 'attribute_ru' => "Алиас разрешения", 'min' => '2']),
+
+            'title_ru.max' => __('validation.max.string', ['attribute' => "Permission name in Russian", 'attribute_ru' => "Название разрешения на Русском", 'max' => '255']),
+            'title_en.max' => __('validation.max.string', ['attribute' => "Permission name in English", 'attribute_ru' => "Название разрешения на Английском", 'max' => '255']),
+            'slug.max' => __('validation.max.string', ['attribute' => "Permission alias", 'attribute_ru' => "Алиас разрешения", 'max' => '255']),
         ];
     }
 }

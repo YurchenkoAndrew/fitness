@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Contracts\Auth\INewPassword;
 use App\Http\Controllers\Controller;
+use App\Services\Contracts\Auth\INewPassword;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class NewPasswordController extends Controller
 {
-    private INewPassword $newPasswordService;
+    private \App\Services\Contracts\Auth\INewPassword $newPasswordService;
 
     public function __construct(INewPassword $newPasswordService)
     {

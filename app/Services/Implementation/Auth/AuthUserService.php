@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Services\Auth;
+namespace App\Services\Implementation\Auth;
 
-use App\Contracts\Auth\IAuthUser;
 use App\Repositories\Interfaces\Auth\IAuthRepository;
+use App\Services\Contracts\Auth\IAuthUser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function __;
+use function auth;
+use function response;
 
 /**
  *

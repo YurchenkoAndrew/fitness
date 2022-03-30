@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Contracts\RolesAndPermissions;
+namespace App\Services\Contracts\RolesAndPermissions;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 
-interface Roles
+interface IRoles
 {
     public function listRoles(): JsonResponse;
 
@@ -16,4 +16,8 @@ interface Roles
     public function updateRole(FormRequest $request, int $id): JsonResponse;
 
     public function deleteRole(int $id): JsonResponse;
+
+    public function setPermission(FormRequest $request): JsonResponse;
+
+    public function deletePermission(FormRequest $request): JsonResponse;
 }

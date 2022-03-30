@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
 /**
+ * localhost/posts?order_by_field=name&order_by_value=DESC
  *
  */
 class OrderBy
@@ -17,8 +18,11 @@ class OrderBy
      */
     public function handle(Builder $query, Closure $next): mixed
     {
-        if (request()->has('order_by_field') && request()->has('order_by_value')) {
-            $query->orderBy(request('order_by_field'), request('order_by_value'));
+        if (request()->has('sort_by_field') && request()->has('sort_direction')) {
+            $query->orderBy(request('sort_by_field'), request('sort_direction'));
+        }
+        if (request()->has('sort_by_field')) {
+            $query->orderBy(request('sort_by_field'), 'ASC');
         }
 
         return $next($query);
