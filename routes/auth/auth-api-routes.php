@@ -11,3 +11,6 @@ Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verify'])->midd
 
 // Resend link to verify email
 Route::post('/email/verify/resend', [AuthController::class, 'resend'])->middleware(['guest', 'throttle:6,1'])->name('verification.send');
+
+//Login User
+Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login');

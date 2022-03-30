@@ -2,12 +2,26 @@
 
 namespace App\Providers;
 
-use App\Contracts\Auth\IAuthUser;
-use App\Contracts\Auth\INewPassword;
-use App\Contracts\Auth\IPasswordResetLink;
-use App\Services\Auth\AuthUserService;
-use App\Services\Auth\NewPasswordService;
-use App\Services\Auth\PasswordResetLinkService;
+use App\Repositories\DAO\Auth\AuthRepository;
+use App\Repositories\DAO\RolesAndPermissions\PermissionsRepository;
+use App\Repositories\DAO\RolesAndPermissions\RolesRepository;
+use App\Repositories\DAO\UserRepository;
+use App\Repositories\Interfaces\Auth\IAuthRepository;
+use App\Repositories\Interfaces\IUserRepository;
+use App\Repositories\Interfaces\RolesAndPermissions\IPermissionsRepository;
+use App\Repositories\Interfaces\RolesAndPermissions\IRolesRepository;
+use App\Services\Contracts\Auth\IAuthUser;
+use App\Services\Contracts\Auth\INewPassword;
+use App\Services\Contracts\Auth\IPasswordResetLink;
+use App\Services\Contracts\IUserService;
+use App\Services\Contracts\RolesAndPermissions\IPermissions;
+use App\Services\Contracts\RolesAndPermissions\IRoles;
+use App\Services\Implementation\Auth\AuthUserService;
+use App\Services\Implementation\Auth\NewPasswordService;
+use App\Services\Implementation\Auth\PasswordResetLinkService;
+use App\Services\Implementation\RolesAndPermissions\PermissionsService;
+use App\Services\Implementation\RolesAndPermissions\RolesService;
+use App\Services\Implementation\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,9 +33,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->instance(IAuthUser::class, new AuthUserService());
-        $this->app->instance(IPasswordResetLink::class, new PasswordResetLinkService());
-        $this->app->instance(INewPassword::class, new NewPasswordService());
+        $this->app->bind(IAuthRepository::class, AuthRepository::class);
+        $this->app->bind(IAuthUser::class, AuthUserService::class);
+        $this->app->bind(IPasswordResetLink::class, PasswordResetLinkService::class);
+        $this->app->bind(INewPassword::class, NewPasswordService::class);
+        $this->app->bind(IRolesRepository::class, RolesRepository::class);
+        $this->app->bind(IRoles::class, RolesService::class);
+        $this->app->bind(IPermissions::class, PermissionsService::class);
+        $this->app->bind(IPermissionsRepository::class, PermissionsRepository::class);
+        $this->app->bind(IUserRepository::class, UserRepository::class);
+        $this->app->bind(IUserService::class, UserService::class);
     }
 
     /**

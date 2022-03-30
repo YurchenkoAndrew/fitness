@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Services\Auth;
+namespace App\Services\Implementation\Auth;
 
-use App\Contracts\Auth\IPasswordResetLink;
 use App\Http\Requests\Auth\PasswordResetLinkStoreRequest;
+use App\Services\Contracts\Auth\IPasswordResetLink;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpFoundation\Response;
+use function __;
+use function response;
 
 class PasswordResetLinkService implements IPasswordResetLink
 {
