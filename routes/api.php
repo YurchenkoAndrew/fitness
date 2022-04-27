@@ -21,4 +21,3 @@ include('roles-and-permissions/roles.php');
 include('roles-and-permissions/permissions.php');
 Route::get('users/paginate', [UserController::class, 'paginateUser']);
 Route::apiResource('users', UserController::class);
-
