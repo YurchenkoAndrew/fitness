@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contracts\Auth;
+namespace App\Services\Interfaces\Auth;
 
 use App\Http\Requests\Auth\PasswordResetLinkStoreRequest;
 use Illuminate\Http\JsonResponse;

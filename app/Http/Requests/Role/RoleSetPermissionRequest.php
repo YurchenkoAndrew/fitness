@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Role;
 
+use App\Contracts\Constants\Permissions;
+use App\Helpers\Interfaces\ICheckingPermissionsForRole;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Http\FormRequest;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -10,11 +13,12 @@ class RoleSetPermissionRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool
+     * @param ICheckingPermissionsForRole $checkingPermissionsForRole
+     * @return Response|bool
      */
-    public function authorize(): bool
+    public function authorize(ICheckingPermissionsForRole $checkingPermissionsForRole): Response|bool
     {
-        return true;
+        return $checkingPermissionsForRole->isPermission(auth('api')->user()->role_id, Permissions::SET_PERMISSION);
     }
 
     /**

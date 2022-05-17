@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleSetPermissionRequest;
 use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
-use App\Services\Contracts\RolesAndPermissions\IRoles;
+use App\Models\RoleAndPermission\Role;
 use App\Services\Implementation\RolesAndPermissions\RolesService;
+use App\Services\Interfaces\RolesAndPermissions\IRoles;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -25,7 +26,32 @@ class RoleController extends Controller
      */
     public function __construct(RolesService $service)
     {
+        $this->middleware('auth:api');
+        $this->authorizeResource(Role::class, 'role');
         $this->service = $service;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    protected function resourceAbilityMap()
+    {
+        return array_merge(parent::resourceAbilityMap(), [
+            'setPermission' => 'setPermission',
+            'deletePermission' => 'deletePermission'
+        ]);
+    }
+
+    /**
+     * @return array|string[]
+     */
+    protected function resourceMethodsWithoutModels()
+    {
+        return array_merge(parent::resourceMethodsWithoutModels(), [
+            'setPermission',
+            'deletePermission',
+            'edit',
+        ]);
     }
 
     /**
@@ -50,35 +76,46 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Role $role
+     * @return JsonResponse
+     */
+    public function show(Role $role): JsonResponse
+    {
+        return $this->service->shouRole($role->id);
+    }
+
+    /**
+     * Display the specified resource.
+     *
      * @param int $id
      * @return JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function edit(int $id): JsonResponse
     {
-        return $this->service->shouRole($id);
+        return $this->service->editRole($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param UpdateRoleRequest $request
-     * @param int $id
+     * @param Role $role
      * @return JsonResponse
      */
-    public function update(UpdateRoleRequest $request, int $id): JsonResponse
+    public function update(UpdateRoleRequest $request, Role $role): JsonResponse
     {
-        return $this->service->updateRole($request, $id);
+        return $this->service->updateRole($request, $role->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Role $role
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(Role $role): JsonResponse
     {
-        return $this->service->deleteRole($id);
+        return $this->service->deleteRole($role->id);
     }
 
     /**

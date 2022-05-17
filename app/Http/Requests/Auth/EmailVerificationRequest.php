@@ -40,4 +40,16 @@ class EmailVerificationRequest extends FormRequest
             'hash' => 'required|string',
         ];
     }
+
+    #[ArrayShape(['id.required' => "mixed", 'id.string' => "mixed", 'token.required' => "mixed", 'token.string' => "mixed"])]
+    public function messages(): array
+    {
+        return [
+            'id.required' => __('validation.required', ['attribute_en' => 'ID', 'attribute_ru' => 'ID', 'attribute_kz' => 'ID']),
+            'id.string' => __('validation.string', ['attribute_en' => 'ID', 'attribute_ru' => 'ID', 'attribute_kz' => 'ID']),
+
+            'token.required' => __('validation.required', ['attribute_en' => 'Token', 'attribute_ru' => 'Токен', 'attribute_kz' => 'Төкен']),
+            'token.string' => __('validation.string', ['attribute_en' => 'Token', 'attribute_ru' => 'Токен', 'attribute_kz' => 'Төкен']),
+        ];
+    }
 }

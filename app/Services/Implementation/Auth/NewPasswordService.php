@@ -2,7 +2,7 @@
 
 namespace App\Services\Implementation\Auth;
 
-use App\Services\Contracts\Auth\INewPassword;
+use App\Services\Interfaces\Auth\INewPassword;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

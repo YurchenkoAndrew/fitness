@@ -2,7 +2,7 @@
 
 namespace App\Repositories\DAO\RolesAndPermissions;
 
-use App\Models\RoleAndPermission\Permissions;
+use App\Models\RoleAndPermission\Permission;
 use App\Repositories\DAO\BaseRepository;
 use App\Repositories\Interfaces\RolesAndPermissions\IPermissionsRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +15,6 @@ class PermissionsRepository extends BaseRepository implements IPermissionsReposi
      */
     public function model(): Model
     {
-        return new Permissions();
+        return new Permission();
     }
 }

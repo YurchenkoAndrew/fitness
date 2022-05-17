@@ -3,7 +3,7 @@
 namespace App\Services\Implementation\Auth;
 
 use App\Repositories\Interfaces\Auth\IAuthRepository;
-use App\Services\Contracts\Auth\IAuthUser;
+use App\Services\Interfaces\Auth\IAuthUser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

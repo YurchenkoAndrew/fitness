@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Security\UsersRequests\UserPaginateRequest;
 use App\Http\Requests\Security\UsersRequests\UserUpdateRequest;
-use App\Services\Contracts\IUserService;
+use App\Services\Interfaces\IUserService;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller

@@ -12,7 +12,7 @@ class RoleSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Role::query()->create([
             'title_ru' => 'Супер администратор',

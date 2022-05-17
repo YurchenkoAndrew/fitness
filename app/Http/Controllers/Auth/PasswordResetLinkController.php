@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\PasswordResetLinkStoreRequest;
+use App\Services\Interfaces\Auth\IPasswordResetLink;
 use Illuminate\Http\JsonResponse;
 
 class PasswordResetLinkController extends Controller
 {
-    private \App\Services\Contracts\Auth\IPasswordResetLink $passwordResetLinkService;
+    private IPasswordResetLink $passwordResetLinkService;
 
-    public function __construct(\App\Services\Contracts\Auth\IPasswordResetLink $passwordResetLink)
+    public function __construct(IPasswordResetLink $passwordResetLink)
     {
         $this->passwordResetLinkService = $passwordResetLink;
     }

@@ -5,7 +5,7 @@ namespace App\Services\Implementation;
 use App\Pipes\QueryFilters\OrderBy;
 use App\Pipes\QueryFilters\SelectByRole;
 use App\Repositories\Interfaces\IUserRepository;
-use App\Services\Contracts\IUserService;
+use App\Services\Interfaces\IUserService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

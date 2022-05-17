@@ -27,10 +27,10 @@ class StoreRoleRequest extends FormRequest
     /**
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
-            'slug' => Str::slug($this->title_en),
+            'slug' => Str::upper(Str::slug($this->title_en)),
         ]);
     }
 
@@ -45,7 +45,7 @@ class StoreRoleRequest extends FormRequest
         return [
             'title_ru' => 'required|string|min:2|max:255',
             'title_en' => 'required|string|min:2|max:255',
-            'slug' => 'required|string|min:2|max:255',
+//            'slug' => 'required|string|min:2|max:255',
         ];
     }
 
@@ -55,21 +55,21 @@ class StoreRoleRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title_ru.required' => __('validation.required', ['attribute' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском"]),
-            'title_en.required' => __('validation.required', ['attribute' => "Role name in English", 'attribute_ru' => "Название роли на Английском"]),
-            'slug.required' => __('validation.required', ['attribute' => "Role alias", 'attribute_ru' => "Алиас роли"]),
+            'title_ru.required' => __('validation.required', ['attribute_en' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском", 'attribute_kz' => "Орыс тілінде рөл аты"]),
+            'title_en.required' => __('validation.required', ['attribute_en' => "Role name in English", 'attribute_ru' => "Название роли на Английском", 'attribute_kz' => "Ағылшын тіліндегі рөл атауы"]),
+            'slug.required' => __('validation.required', ['attribute_en' => "Role alias", 'attribute_ru' => "Алиас роли", 'attribute_kz' => "Рөл бүркеншік аты"]),
 
-            'title_ru.string' => __('validation.string', ['attribute' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском"]),
-            'title_en.string' => __('validation.string', ['attribute' => "Role name in English", 'attribute_ru' => "Название роли на Английском"]),
-            'slug.string' => __('validation.string', ['attribute' => "Role alias", 'attribute_ru' => "Алиас роли"]),
+            'title_ru.string' => __('validation.string', ['attribute_en' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском", 'attribute_kz' => "Орыс тілінде рөл аты"]),
+            'title_en.string' => __('validation.string', ['attribute_en' => "Role name in English", 'attribute_ru' => "Название роли на Английском", 'attribute_kz' => "Ағылшын тіліндегі рөл атауы"]),
+            'slug.string' => __('validation.string', ['attribute_en' => "Role alias", 'attribute_ru' => "Алиас роли", 'attribute_kz' => "Рөл бүркеншік аты"]),
 
-            'title_ru.min' => __('validation.min.string', ['attribute' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском", 'min' => '2']),
-            'title_en.min' => __('validation.min.string', ['attribute' => "Role name in English", 'attribute_ru' => "Название роли на Английском", 'min' => '2']),
-            'slug.min' => __('validation.min.string', ['attribute' => "Role alias", 'attribute_ru' => "Алиас роли", 'min' => '2']),
+            'title_ru.min' => __('validation.min.string', ['attribute_en' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском", 'attribute_kz' => "Орыс тілінде рөл аты", 'min' => '2']),
+            'title_en.min' => __('validation.min.string', ['attribute_en' => "Role name in English", 'attribute_ru' => "Название роли на Английском", 'attribute_kz' => "Ағылшын тіліндегі рөл атауы", 'min' => '2']),
+            'slug.min' => __('validation.min.string', ['attribute_en' => "Role alias", 'attribute_ru' => "Алиас роли", 'attribute_kz' => "Рөл бүркеншік аты", 'min' => '2']),
 
-            'title_ru.max' => __('validation.max.string', ['attribute' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском", 'max' => '255']),
-            'title_en.max' => __('validation.max.string', ['attribute' => "Role name in English", 'attribute_ru' => "Название роли на Английском", 'max' => '255']),
-            'slug.max' => __('validation.max.string', ['attribute' => "Role alias", 'attribute_ru' => "Алиас роли", 'max' => '255']),
+            'title_ru.max' => __('validation.max.string', ['attribute_en' => "Role name in Russian", 'attribute_ru' => "Название роли на Русском", 'attribute_kz' => "Орыс тілінде рөл аты", 'max' => '255']),
+            'title_en.max' => __('validation.max.string', ['attribute_en' => "Role name in English", 'attribute_ru' => "Название роли на Английском", 'attribute_kz' => "Ағылшын тіліндегі рөл атауы", 'max' => '255']),
+            'slug.max' => __('validation.max.string', ['attribute_en' => "Role alias", 'attribute_ru' => "Алиас роли", 'attribute_kz' => "Рөл бүркеншік аты", 'max' => '255']),
         ];
     }
 }

@@ -4,9 +4,10 @@ namespace App\Services\Implementation\RolesAndPermissions;
 
 use App\Pipes\QueryFilters\OrderBy;
 use App\Repositories\Interfaces\RolesAndPermissions\IPermissionsRepository;
-use App\Services\Contracts\RolesAndPermissions\IPermissions;
+use App\Services\Interfaces\RolesAndPermissions\IPermissions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -33,7 +34,14 @@ class PermissionsService implements IPermissions
      */
     public function listPermissions(): JsonResponse
     {
+        $locale = App::currentLocale();
         $data = $this->repository->all([OrderBy::class]);
+        if ($locale === 'en'){
+            $data->makeHidden('title_ru');
+        }
+        if ($locale === 'ru'){
+            $data->makeHidden('title_en');
+        }
         return response()->json(['data' => $data], Response::HTTP_OK);
     }
 

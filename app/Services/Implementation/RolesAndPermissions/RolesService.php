@@ -2,11 +2,16 @@
 
 namespace App\Services\Implementation\RolesAndPermissions;
 
+use App\Http\Resources\Role\RoleEnResource;
+use App\Http\Resources\Role\RoleRelationPermissionsEnResource;
+use App\Http\Resources\Role\RoleRelationPermissionsRuResource;
+use App\Http\Resources\Role\RoleRuResource;
 use App\Pipes\QueryFilters\OrderBy;
 use App\Repositories\Interfaces\RolesAndPermissions\IRolesRepository;
-use App\Services\Contracts\RolesAndPermissions\IRoles;
+use App\Services\Interfaces\RolesAndPermissions\IRoles;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -32,7 +37,15 @@ class RolesService implements IRoles
      */
     public function listRoles(): JsonResponse
     {
-        $data = $this->repository->all([OrderBy::class]);
+        $locale = App::currentLocale();
+//        $data = $this->repository->all([OrderBy::class]);
+        if ($locale === 'en') {
+            $data = RoleEnResource::collection($this->repository->all([OrderBy::class]));
+        } elseif ($locale === 'ru') {
+            $data = RoleRuResource::collection($this->repository->all([OrderBy::class]));
+        } else {
+            $data = RoleRuResource::collection($this->repository->all([OrderBy::class]));
+        }
         return response()->json(['data' => $data], Response::HTTP_OK);
     }
 
@@ -42,7 +55,14 @@ class RolesService implements IRoles
      */
     public function shouRole(int $id): JsonResponse
     {
-        $data = $this->repository->show($id);
+        $locale = App::currentLocale();
+        if ($locale === 'en') {
+            $data = new RoleRelationPermissionsEnResource($this->repository->show($id));
+        } elseif ($locale === 'ru') {
+            $data = new RoleRelationPermissionsRuResource($this->repository->show($id));
+        } else {
+            $data = new RoleRelationPermissionsRuResource($this->repository->show($id));
+        }
         return response()->json(['data' => $data], Response::HTTP_OK);
     }
 
@@ -54,6 +74,16 @@ class RolesService implements IRoles
     {
         $data = $this->repository->store($request);
         return response()->json(['data' => $data], Response::HTTP_CREATED);
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function editRole(int $id): JsonResponse
+    {
+        $data = $this->repository->show($id);
+        return response()->json(['data' => $data], Response::HTTP_OK);
     }
 
     /**

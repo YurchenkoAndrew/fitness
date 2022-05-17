@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contracts\Auth;
+namespace App\Services\Interfaces\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Contracts\RolesAndPermissions;
+namespace App\Services\Interfaces\RolesAndPermissions;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;

@@ -39,15 +39,15 @@ class UserUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => __('validation.required', ['attribute' => 'Name', 'attribute_ru' => 'Имя']),
-            'name.min' => __('validation.min.string', ['attribute' => 'Name', 'attribute_ru' => 'Имя', 'min' => 3]),
-            'name.max' => __('validation.max.string', ['attribute' => 'Name', 'attribute_ru' => 'Имя', 'max' => 20]),
+            'name.required' => __('validation.required', ['attribute_en' => 'User Name', 'attribute_ru' => 'Имя пользователя', 'attribute_kz' => 'Пайдаланушы аты']),
+            'name.min' => __('validation.min.string', ['attribute_en' => 'User Name', 'attribute_ru' => 'Имя пользователя', 'attribute_kz' => 'Пайдаланушы аты', 'min' => 3]),
+            'name.max' => __('validation.max.string', ['attribute_en' => 'User Name', 'attribute_ru' => 'Имя пользователя', 'attribute_kz' => 'Пайдаланушы аты', 'max' => 20]),
 
-            'email.required' => __('validation.required', ['attribute' => 'Email', 'attribute_ru' => 'Email']),
+            'email.required' => __('validation.required', ['attribute_en' => 'Email', 'attribute_ru' => 'Email', 'attribute_kz' => 'Email']),
             'email.email' => __('validation.email', ['attribute' => 'Email']),
 
-            'role.string' => __('validation.string', ['attribute' => 'Role', 'attribute_ru' => 'Роль']),
-            'role.alfa' => __('validation.alpha', ['attribute' => 'Role', 'attribute_ru' => 'Роль']),
+            'role.string' => __('validation.string', ['attribute_en' => 'Role', 'attribute_ru' => 'Роль', 'attribute_kz' => 'Рөл']),
+            'role.alfa' => __('validation.alpha', ['attribute' => 'Role', 'attribute_ru' => 'Роль', 'attribute_kz' => 'Рөл']),
         ];
     }
 }

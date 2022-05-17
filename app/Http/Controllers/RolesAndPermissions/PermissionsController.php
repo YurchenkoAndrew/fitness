@@ -5,7 +5,7 @@ namespace App\Http\Controllers\RolesAndPermissions;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Permissions\StorePermissionsRequest;
 use App\Http\Requests\Permissions\UpdatePermissionsRequest;
-use App\Services\Contracts\RolesAndPermissions\IPermissions;
+use App\Services\Interfaces\RolesAndPermissions\IPermissions;
 use Illuminate\Http\JsonResponse;
 
 /**

@@ -67,4 +67,13 @@ class RolesRepository extends BaseRepository implements IRolesRepository
         }
         return response()->json(['message' => __('permissions.delete')], Response::HTTP_OK);
     }
+
+    public function show(int $id): Model
+    {
+        try {
+            return $this->model->query()->with('permissions')->findOrFail($id);
+        } catch (Exception $exception) {
+            throw new HttpException($exception->getCode(), $exception->getMessage());
+        }
+    }
 }

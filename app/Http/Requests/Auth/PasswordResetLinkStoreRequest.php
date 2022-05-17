@@ -29,4 +29,13 @@ class PasswordResetLinkStoreRequest extends FormRequest
             'email' => 'required|email',
         ];
     }
+
+    #[ArrayShape(['email.required' => "mixed", 'email.email' => "mixed"])]
+    public function messages(): array
+    {
+        return [
+            'email.required' => __('validation.required', ['attribute_en' => 'Email', 'attribute_ru' => 'Email', 'attribute_kz' => 'Email']),
+            'email.email' => __('validation.email', ['attribute' => 'Email'])
+        ];
+    }
 }

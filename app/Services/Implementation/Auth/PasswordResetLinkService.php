@@ -3,7 +3,7 @@
 namespace App\Services\Implementation\Auth;
 
 use App\Http\Requests\Auth\PasswordResetLinkStoreRequest;
-use App\Services\Contracts\Auth\IPasswordResetLink;
+use App\Services\Interfaces\Auth\IPasswordResetLink;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpFoundation\Response;

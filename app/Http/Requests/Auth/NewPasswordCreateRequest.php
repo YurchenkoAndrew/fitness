@@ -34,4 +34,13 @@ class NewPasswordCreateRequest extends FormRequest
             'token' => 'required|string',
         ];
     }
+
+    #[ArrayShape(['token.required' => "mixed", 'token.string' => "mixed"])]
+    public function messages(): array
+    {
+        return [
+            'token.required' => __('validation.required', ['attribute_en' => 'Token', 'attribute_ru' => 'Токен', 'attribute_kz' => 'Төкен']),
+            'token.string' => __('validation.string', ['attribute_en' => 'Token', 'attribute_ru' => 'Токен', 'attribute_kz' => 'Төкен']),
+        ];
+    }
 }

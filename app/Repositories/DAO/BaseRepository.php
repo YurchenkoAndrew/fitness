@@ -72,7 +72,7 @@ abstract class BaseRepository implements IBaseRepository
                 ->send($query)
                 ->through($pipes)
                 ->thenReturn();
-            return $result->paginate($request->input(key: 'per_page'));
+            return $result->paginate($request->input('per_page'));
         } catch (Exception $exception) {
             throw new HttpException($exception->getCode(), $exception->getMessage());
         }
@@ -86,11 +86,10 @@ abstract class BaseRepository implements IBaseRepository
     public function show(int $id): Model
     {
         try {
-            $data = $this->model->query()->findOrFail($id);
+            return $this->model->query()->findOrFail($id);
         } catch (Exception $exception) {
             throw new HttpException($exception->getCode(), $exception->getMessage());
         }
-        return $data;
     }
 
     /**

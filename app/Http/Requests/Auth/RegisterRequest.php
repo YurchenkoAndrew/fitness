@@ -41,18 +41,18 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => __('validation.required', ['attribute' => 'Name', 'attribute_ru' => 'Имя']),
-            'name.min' => __('validation.min.string', ['attribute' => 'Name', 'attribute_ru' => 'Имя', 'min' => 3]),
-            'name.max' => __('validation.max.string', ['attribute' => 'Name', 'attribute_ru' => 'Имя', 'max' => 20]),
+            'name.required' => __('validation.required', ['attribute_en' => 'User Name', 'attribute_ru' => 'Имя пользователя', 'attribute_kz' => 'Пайдаланушы аты']),
+            'name.min' => __('validation.min.string', ['attribute_en' => 'User Name', 'attribute_ru' => 'Имя пользователя', 'attribute_kz' => 'Пайдаланушы аты', 'min' => 3]),
+            'name.max' => __('validation.max.string', ['attribute_en' => 'User Name', 'attribute_ru' => 'Имя пользователя', 'attribute_kz' => 'Пайдаланушы аты', 'max' => 20]),
 
-            'email.required' => __('validation.required', ['attribute' => 'Email', 'attribute_ru' => 'Email']),
+            'email.required' => __('validation.required', ['attribute_en' => 'Email', 'attribute_ru' => 'Email', 'attribute_kz' => 'Email']),
             'email.email' => __('validation.email', ['attribute' => 'Email']),
             'email.unique' => __('validation.unique', ['attribute' => 'Email']),
 
-            'password.required' => __('validation.required', ['attribute' => 'Password', 'attribute_ru' => 'Пароль']),
-            'password.min' => __('validation.min', ['attribute' => 'Password', 'attribute_ru' => 'Пароль']),
-            'password.string' => __('validation.string', ['attribute' => 'Password', 'attribute_ru' => 'Пароль']),
-            'password.confirmed' => __('validation.confirmed', ['attribute' => 'Password', 'attribute_ru' => 'Пароля']),
+            'password.required' => __('validation.required', ['attribute_en' => 'Password', 'attribute_ru' => 'Пароль', 'attribute_kz' => 'Құпия сөз']),
+            'password.min' => __('validation.min.string', ['attribute_en' => 'Password', 'attribute_ru' => 'Пароль', 'attribute_kz' => 'Құпия сөз', 'min' => '8']),
+            'password.string' => __('validation.string', ['attribute_en' => 'Password', 'attribute_ru' => 'Пароль', 'attribute_kz' => 'Құпия сөз']),
+            'password.confirmed' => __('validation.confirmed', ['attribute_en' => 'Password', 'attribute_ru' => 'Пароля', 'attribute_kz' => 'Құпия сөз']),
         ];
     }
 }

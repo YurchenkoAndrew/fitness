@@ -35,10 +35,10 @@ class AuthRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'username.required' => 'Email обязателен!',
-            'username.email' => 'Email должен соответствовать формату user@domen.net',
-            'password.required' => 'Пароль обязателен!',
-            'password.min' => 'Пароль не может быть короче 8 символов!',
+            'username.required' => __('validation.required', ['attribute_en' => 'Email', 'attribute_ru' => 'Email', 'attribute_kz' => 'Email']),
+            'username.email' => __('validation.email', ['attribute' => 'Email']),
+            'password.required' => __('validation.required', ['attribute_en' => 'Password', 'attribute_ru' => 'Пароль', 'attribute_kz' => 'Құпия сөз']),
+            'password.min' => __('validation.min.string', ['attribute_en' => 'Password', 'attribute_ru' => 'Пароль', 'attribute_kz' => 'Құпия сөз', 'min' => '8']),
         ];
     }
 }

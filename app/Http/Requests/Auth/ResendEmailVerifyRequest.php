@@ -29,4 +29,13 @@ class ResendEmailVerifyRequest extends FormRequest
             'email' => 'required|email'
         ];
     }
+
+    #[ArrayShape(['email.required' => "mixed", 'email.email' => "mixed"])]
+    public function messages(): array
+    {
+        return [
+            'email.required' => __('validation.required', ['attribute' => 'Email']),
+            'email.email' => __('validation.email', ['attribute_en' => 'Email']),
+        ];
+    }
 }

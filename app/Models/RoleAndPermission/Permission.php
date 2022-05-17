@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  *
+ * @property int $id
  */
-class Permissions extends Model
+class Permission extends Model
 {
     use HasFactory;
 
